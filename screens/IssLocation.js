@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, ImageBackground, StatusBar, SafeAreaView, Platform } from 'react-native';
+import { Text, View, StyleSheet, ImageBackground, StatusBar, SafeAreaView, Platform, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps'
 
 export default class ISSTrackerScreen extends Component {
@@ -11,6 +11,23 @@ export default class ISSTrackerScreen extends Component {
                     <View style={styles.titleContainer}>
                         <Text style={styles.titleText}>Localização da EEI</Text>
                     </View>
+                    <View style={styles.mapContainer}>
+                        <MapView
+                        style={styles.map}
+                                region={{
+                                    latitude: -23,
+                                    longitude: -56,
+                                    latitudeDelta: 50,
+                                    longitudeDelta: 60
+                                }}
+                        >
+                            <Marker
+                                    coordinate={{ latitude: -23, longitude: -56 }}
+                                >
+                                    <Image source={require('../assets/iss_icon.png')} style={{ height: 50, width: 50 }} />
+                                </Marker>
+                        </MapView>
+                    </View>
                 </ImageBackground>
             </View>
         );
@@ -19,7 +36,8 @@ export default class ISSTrackerScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor:"black"
     },
     droidSafeArea: {
        marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
