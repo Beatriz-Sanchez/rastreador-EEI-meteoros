@@ -32,7 +32,7 @@ export default class ISSTrackerScreen extends Component {
   };
 
   componentDidMount() {
-    this.getIssLocation();
+    this.getIssLocation()
   }
 
   render() {
@@ -75,6 +75,12 @@ export default class ISSTrackerScreen extends Component {
                       />
                     </Marker>
                   </MapView>
+                </View>
+                <View style={styles.infoContainer}>
+                      <Text style={styles.infoText}>Latitude: {this.state.location.latitude} </Text>
+                      <Text style={styles.infoText}>Longitude: {this.state.location.longitude} </Text>
+                      <Text style={styles.infoText}>Altitude : {this.state.location.altitude} km</Text>
+                      <Text style={styles.infoText}>Velocidade: {this.state.location.latitude} km/h</Text>
                 </View>
               </ImageBackground>
             </View>
