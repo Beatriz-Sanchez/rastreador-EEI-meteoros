@@ -37,9 +37,24 @@ export default class MeteorScreen extends Component {
         return this.state.meteors[meteor_date];
       });
       let meteors = [].concat.apply([], meteor_arr);
+      meteors.forEach((element) => {
+        let diameter =
+          (element.estimated_diameter.kilometers.estimated_diameter_min +
+            element.estimated_diameter.kilometers.estimated_diameter_min) /
+          2;
+        let distance = element.close_approach_data[0].miss_distance.kilometers;
+        let threatScore = (diameter / distance) * 1000000000;
+        element.threat_score = threatScore;
+      });
       return (
         <View style={styles.container}>
+          <Text> Há {meteors.length} meteoros passando perto da terra esta semana!</Text>
+          <Text> </Text>
           <Text> {meteors[0].name} </Text>
+          <Text> {meteors[0].threat_score} </Text>
+          <Text> </Text>
+          <Text> {meteors[1].name} </Text>
+          <Text> {meteors[1].threat_score} </Text>
         </View>
       );
     }
