@@ -32,7 +32,7 @@ export default class HomeScreen extends Component {
               style={styles.iconImage}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.routeCard} onPress={()=> this.props.navigation.navigate("Meteor")}>
+          <TouchableOpacity style={styles.routeCard} onPress={()=> this.props.navigation.navigate("Meteors")}>
             <Text style={styles.routeText}>Meteoros</Text>
             <Text style={styles.knowMore}> {"Saiba mais --->"} </Text>
             <Text style={styles.bgDigit}>2</Text>
