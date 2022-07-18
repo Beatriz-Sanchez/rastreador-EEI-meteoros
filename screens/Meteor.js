@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet } from "react-native";
-import axios from 'axios';
+import axios from "axios";
 
 export default class MeteorScreen extends Component {
   constructor() {
@@ -21,23 +21,27 @@ export default class MeteorScreen extends Component {
     }
   };
 
-  componentDidMount(){
+  componentDidMount() {
     this.getMeteores();
   }
 
   render() {
     if (Object.keys(this.state.meteors).length === 0) {
-        return (
-            <View style={styles.container}>
-              <Text> Carregando... </Text>
-            </View>
-          );
+      return (
+        <View style={styles.container}>
+          <Text> Carregando... </Text>
+        </View>
+      );
     } else {
-        return (
-            <View style={styles.container}>
-              <Text> Chamada realizada! </Text>
-            </View>
-          );
+      let meteor_arr = Object.keys(this.state.meteors).map((meteor_date) => {
+        return this.state.meteors[meteor_date];
+      });
+      let meteors = [].concat.apply([], meteor_arr);
+      return (
+        <View style={styles.container}>
+          <Text> {meteors[0].name} </Text>
+        </View>
+      );
     }
   }
 }
