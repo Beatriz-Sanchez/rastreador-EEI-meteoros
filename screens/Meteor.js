@@ -26,11 +26,29 @@ export default class MeteorScreen extends Component {
     this.getMeteores();
   }
 
+  renderItem = ({ item }) => {
+    let meteor = item;
+    let bg_img, speed, size;
+    if (meteor.threat_score <= 30) {
+      bg_img = require("../assets/meteor_bg1.png");
+      speed = require("../assets/meteor_speed3.gif");
+      size = 100;
+    } else if (meteor.threat_score <= 75) {
+      bg_img = require("../assets/meteor_bg2.png");
+      speed = require("../assets/meteor_speed3.gif");
+      size = 150;
+    } else {
+      bg_img = require("../assets/meteor_bg3.png");
+      speed = require("../assets/meteor_speed3.gif");
+      size = 200;
+    }
+  };
+
   render() {
     if (Object.keys(this.state.meteors).length === 0) {
       return (
         <View style={styles.container}>
-          <Text style={{color:"white"}}> Carregando... </Text>
+          <Text style={{ color: "white" }}> Carregando... </Text>
         </View>
       );
     } else {
@@ -47,13 +65,15 @@ export default class MeteorScreen extends Component {
         let threatScore = (diameter / distance) * 1000000000;
         element.threat_score = threatScore;
       });
-      meteors.sort((a,b)=>{ return (b.threat_score - a.threat_score)});
-      meteors = meteors.slice(0,5);
+      meteors.sort((a, b) => {
+        return b.threat_score - a.threat_score;
+      });
+      meteors = meteors.slice(0, 5);
       return (
         <View style={styles.container}>
           <SafeAreaView style={styles.droidSafeArea} />
-          <FlatList 
-            keyExtractor = {(item,index)=> index.toString()}
+          <FlatList
+            keyExtractor={(item, index) => index.toString()}
             data={meteors}
             renderItem={this.renderItem}
             horizontal={true}
