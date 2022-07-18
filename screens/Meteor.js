@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import { Text, View, StyleSheet, SafeAreaView, Platform } from "react-native";
 import axios from "axios";
 
 export default class MeteorScreen extends Component {
@@ -29,7 +30,7 @@ export default class MeteorScreen extends Component {
     if (Object.keys(this.state.meteors).length === 0) {
       return (
         <View style={styles.container}>
-          <Text> Carregando... </Text>
+          <Text style={{color:"white"}}> Carregando... </Text>
         </View>
       );
     } else {
@@ -46,15 +47,17 @@ export default class MeteorScreen extends Component {
         let threatScore = (diameter / distance) * 1000000000;
         element.threat_score = threatScore;
       });
+      meteors.sort((a,b)=>{ return (b.threat_score - a.threat_score)});
+      meteors = meteors.slice(0,5);
       return (
         <View style={styles.container}>
-          <Text> Há {meteors.length} meteoros passando perto da terra esta semana!</Text>
-          <Text> </Text>
-          <Text> {meteors[0].name} </Text>
-          <Text> {meteors[0].threat_score} </Text>
-          <Text> </Text>
-          <Text> {meteors[1].name} </Text>
-          <Text> {meteors[1].threat_score} </Text>
+          <SafeAreaView style={styles.droidSafeArea} />
+          <FlatList 
+            keyExtractor = {(item,index)=> index.toString()}
+            data={meteors}
+            renderItem={this.renderItem}
+            horizontal={true}
+          />
         </View>
       );
     }
@@ -64,8 +67,11 @@ export default class MeteorScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffa",
+    backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
+  },
+  droidSafeArea: {
+    marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
   },
 });
